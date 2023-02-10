@@ -544,11 +544,11 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ###  1.5.1. Isolation Forest (IF)
 |
-| **[A]** The Isolation Forest algorithm was implemented only for the principal component descriptors using the <span style="color: #FF0000">isotree</span> package.  
+| **[A]** The Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 3 hyperparameters:
-|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 4.
-|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 4.
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 1.
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
 |      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their differentially expressed deviance score densities.
@@ -597,7 +597,7 @@ Plot_Space_Range <- function(Deviance_Scores, Title, cex.main = 1.4) {
 OD_IF <- isolation.forest(OD, 
                           ndim=1, 
                           ntrees=100, 
-                          nthreads=1)
+                          missing_action="fail")
 
 ##################################
 # Determining the outlier scores
@@ -629,24 +629,100 @@ OD_IF_PredictedScores <- predict(OD_IF, OD)
 max(OD_IF_PredictedScores)
 min(OD_IF_PredictedScores)
 
-DR_PCA_SUBSET$Scores <- OD_IF_PredictedScores
-DR_PCA_SUBSET$Label <- rep("IF", nrow(DR_PCA_SUBSET))
+OD_IF_Summary <- DR_PCA_SUBSET
+
+OD_IF_Summary$Scores <- OD_IF_PredictedScores
+OD_IF_Summary$Label <- rep("IF", nrow(OD_IF_Summary))
 
 densityplot( ~ Scores | Label,
-            data = DR_PCA_SUBSET,
+            data = OD_IF_Summary,
             groups = Status,
             xlab = "Deviance Scores",
-            ylab = "Desnity",
-            auto.key = list(columns = (length(levels(DR_PCA_SUBSET$Status)))))
+            ylab = "Density",
+            auto.key = list(columns = (length(levels(OD_IF_Summary$Status)))))
 
 ##################################
 # Determining the apparent 
 # discrimination performance
 # of the IF Algorithm
 ##################################
-Status <- ifelse(DR_PCA_SUBSET$Status=="Valid",0,1)
+Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 
 (OD_IF_ROCCurveAUC <- AUC(OD_IF_PredictedScores, Status))
+
+```
+
+###  1.5.2. Extended Isolation Forest (EIF)
+|
+| **[A]** The Extended Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+|
+| **[B]** The algorithm contains 3 hyperparameters:
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
+|      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
+|
+| **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their differentially expressed deviance score densities.
+|      **[C.1]** ROC Curve AUC = 0.70587
+|
+```{r section_1.5.2, warning=FALSE, message=FALSE}
+##################################
+# Implementing the EIF Algorithm
+##################################
+OD_EIF <- isolation.forest(OD, 
+                          ndim=2, 
+                          ntrees=100, 
+                          missing_action="fail")
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the entire space range
+##################################
+OD_EIF_DevianceScores <- predict(OD_EIF, Space_Range)
+
+##################################
+# Plotting the heatmap
+# for the deviant points
+##################################
+par(mar = c(2.5,2.2,2,2.5))
+Plot_Space_Range(OD_EIF_DevianceScores,
+                 "Deviance Scores : Extended Isolated Forest",
+                 1.0)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the dataset
+##################################
+OD_EIF_PredictedScores <- predict(OD_EIF, OD)
+
+##################################
+# Exploring the outlier scores
+# between the valid and outlier points
+##################################
+max(OD_EIF_PredictedScores)
+min(OD_EIF_PredictedScores)
+
+OD_EIF_Summary <- DR_PCA_SUBSET
+
+OD_EIF_Summary$Scores <- OD_EIF_PredictedScores
+OD_EIF_Summary$Label <- rep("EIF", nrow(OD_EIF_Summary))
+
+densityplot( ~ Scores | Label,
+            data = OD_EIF_Summary,
+            groups = Status,
+            xlab = "Deviance Scores",
+            ylab = "Density",
+            auto.key = list(columns = (length(levels(OD_EIF_Summary$Status)))))
+
+##################################
+# Determining the apparent 
+# discrimination performance
+# of the EIF Algorithm
+##################################
+Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
+
+(OD_EIF_ROCCurveAUC <- AUC(OD_EIF_PredictedScores, Status))
 
 ```
 
