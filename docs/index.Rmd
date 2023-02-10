@@ -726,7 +726,7 @@ Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 
 ```
 
-###  1.5.2. Isolation Forest with Split Selection Criterion (SCIFOREST)
+###  1.5.3. Isolation Forest with Split Selection Criterion (SCIFOREST)
 |
 | **[A]** The Isolation Forest with Split Selection Criterion algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -737,7 +737,7 @@ Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 |      **[B.4]** <span style="color: #FF0000">coefs</span> = method of sampling random coefficients according to a
 standard distribution held constant at a value of "NORMAL".
 |      **[B.5]** <span style="color: #FF0000">prob_pick_avg_gain</span> = indicates the probability of choosing the threshold on which to split a variable as the threshold that maximizes an averaged standard deviation gain
-criterion on the same variable or linear combination held constant at a value of 1.
+criterion on the same variable held constant at a value of 1.
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was not able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.50761
@@ -804,9 +804,83 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 
 (OD_SCIFOREST_ROCCurveAUC <- AUC(OD_SCIFOREST_PredictedScores, Status))
 
-
 ```
 
+###  1.5.4. Fair-Cut Forest (FCF)
+|
+| **[A]** The Fair-Cut Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+|
+| **[B]** The algorithm contains 4 hyperparameters:
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
+|      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
+|      **[B.4]** <span style="color: #FF0000">prob_pick_pooled_gain</span> = indicates the probability of choosing the threshold on which to split a linear combination of variables as the threshold that maximizes a pooled standard deviation gain criterion on the linear combinantion held constant at a value of 1.
+|
+| **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
+|      **[C.1]** ROC Curve AUC = 0.70315
+|
+```{r section_1.5.4, warning=FALSE, message=FALSE}
+##################################
+# Implementing the FCF Algorithm
+##################################
+OD_FCF <- isolation.forest(OD, 
+                          ndim=2, 
+                          ntrees=100, 
+                          missing_action="fail",
+                          prob_pick_pooled_gain=1)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the entire space range
+##################################
+OD_FCF_DevianceScores <- predict(OD_FCF, Space_Range)
+
+##################################
+# Plotting the heatmap
+# for the deviant points
+##################################
+par(mar = c(2.5,2.2,2,2.5))
+Plot_Space_Range(OD_FCF_DevianceScores,
+                 "Deviance Scores : Fair-Cut Forest",
+                 1.0)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the dataset
+##################################
+OD_FCF_PredictedScores <- predict(OD_FCF, OD)
+
+##################################
+# Exploring the outlier scores
+# between the valid and outlier points
+##################################
+max(OD_FCF_PredictedScores)
+min(OD_FCF_PredictedScores)
+
+OD_FCF_Summary <- DR_PCA_SUBSET
+
+OD_FCF_Summary$Scores <- OD_FCF_PredictedScores
+OD_FCF_Summary$Label <- rep("FCF", nrow(OD_FCF_Summary))
+
+densityplot( ~ Scores | Label,
+            data = OD_FCF_Summary,
+            groups = Status,
+            xlab = "Deviance Scores",
+            ylab = "Density",
+            auto.key = list(columns = (length(levels(OD_FCF_Summary$Status)))))
+
+##################################
+# Determining the apparent 
+# discrimination performance
+# of the FCF Algorithm
+##################################
+Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
+
+(OD_FCF_ROCCurveAUC <- AUC(OD_FCF_PredictedScores, Status))
+
+```
 ##  1.6 Algorithm Comparison Summary
 |
 | Algorithm performance comparison:
