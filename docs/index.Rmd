@@ -612,7 +612,7 @@ OD_IF_DevianceScores <- predict(OD_IF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_IF_DevianceScores,
-                 "Deviance Scores : Isolated Forest",
+                 "Deviance Scores : Isolation Forest",
                  1.0)
 
 ##################################
@@ -686,7 +686,7 @@ OD_EIF_DevianceScores <- predict(OD_EIF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_EIF_DevianceScores,
-                 "Deviance Scores : Extended Isolated Forest",
+                 "Deviance Scores : Extended Isolation Forest",
                  1.0)
 
 ##################################
@@ -723,6 +723,87 @@ densityplot( ~ Scores | Label,
 Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 
 (OD_EIF_ROCCurveAUC <- AUC(OD_EIF_PredictedScores, Status))
+
+```
+
+###  1.5.2. Isolation Forest with Split Selection Criterion (SCIFOREST)
+|
+| **[A]** The Isolation Forest with Split Selection Criterion algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+|
+| **[B]** The algorithm contains 5 hyperparameters:
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
+|      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
+|      **[B.4]** <span style="color: #FF0000">coefs</span> = method of sampling random coefficients according to a
+standard distribution held constant at a value of "NORMAL".
+|      **[B.5]** <span style="color: #FF0000">prob_pick_avg_gain</span> = indicates the probability of choosing the threshold on which to split a variable as the threshold that maximizes an averaged standard deviation gain
+criterion on the same variable or linear combination held constant at a value of 1.
+|
+| **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was not able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
+|      **[C.1]** ROC Curve AUC = 0.50761
+|
+```{r section_1.5.3, warning=FALSE, message=FALSE}
+##################################
+# Implementing the SCIFOREST Algorithm
+##################################
+OD_SCIFOREST <- isolation.forest(OD, 
+                          ndim=2, 
+                          ntrees=100, 
+                          missing_action="fail",
+                          coefs="normal",
+                          prob_pick_avg_gain=1)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the entire space range
+##################################
+OD_SCIFOREST_DevianceScores <- predict(OD_SCIFOREST, Space_Range)
+
+##################################
+# Plotting the heatmap
+# for the deviant points
+##################################
+par(mar = c(2.5,2.2,2,2.5))
+Plot_Space_Range(OD_SCIFOREST_DevianceScores,
+                 "Deviance Scores : Isolation Forest with Split Selection Criterion",
+                 1.0)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the dataset
+##################################
+OD_SCIFOREST_PredictedScores <- predict(OD_SCIFOREST, OD)
+
+##################################
+# Exploring the outlier scores
+# between the valid and outlier points
+##################################
+max(OD_SCIFOREST_PredictedScores)
+min(OD_SCIFOREST_PredictedScores)
+
+OD_SCIFOREST_Summary <- DR_PCA_SUBSET
+
+OD_SCIFOREST_Summary$Scores <- OD_SCIFOREST_PredictedScores
+OD_SCIFOREST_Summary$Label <- rep("SCIFOREST", nrow(OD_SCIFOREST_Summary))
+
+densityplot( ~ Scores | Label,
+            data = OD_SCIFOREST_Summary,
+            groups = Status,
+            xlab = "Deviance Scores",
+            ylab = "Density",
+            auto.key = list(columns = (length(levels(OD_SCIFOREST_Summary$Status)))))
+
+##################################
+# Determining the apparent 
+# discrimination performance
+# of the SCIFOREST Algorithm
+##################################
+Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
+
+(OD_SCIFOREST_ROCCurveAUC <- AUC(OD_SCIFOREST_PredictedScores, Status))
+
 
 ```
 
