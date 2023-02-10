@@ -881,6 +881,84 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 (OD_FCF_ROCCurveAUC <- AUC(OD_FCF_PredictedScores, Status))
 
 ```
+
+###  1.5.5. Density Isolation Forest (DIF)
+|
+| **[A]** The Density Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+|
+| **[B]** The algorithm contains 4 hyperparameters:
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
+|      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
+|      **[B.4]** <span style="color: #FF0000">scoring_metric</span> = metric to use for determining outlier scores held constant at a value of "DENSITY".
+|
+| **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
+|      **[C.1]** ROC Curve AUC = 0.70465
+|
+```{r section_1.5.5, warning=FALSE, message=FALSE}
+##################################
+# Implementing the DIF Algorithm
+##################################
+OD_DIF <- isolation.forest(OD, 
+                          ndim=2, 
+                          ntrees=100, 
+                          missing_action="fail",
+                          scoring_metric="density",
+                          sample_size=256)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the entire space range
+##################################
+OD_DIF_DevianceScores <- predict(OD_DIF, Space_Range)
+
+##################################
+# Plotting the heatmap
+# for the deviant points
+##################################
+par(mar = c(2.5,2.2,2,2.5))
+Plot_Space_Range(OD_DIF_DevianceScores,
+                 "Deviance Scores : Density Isolation Forest",
+                 1.0)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the dataset
+##################################
+OD_DIF_PredictedScores <- predict(OD_DIF, OD)
+
+##################################
+# Exploring the outlier scores
+# between the valid and outlier points
+##################################
+max(OD_DIF_PredictedScores)
+min(OD_DIF_PredictedScores)
+
+OD_DIF_Summary <- DR_PCA_SUBSET
+
+OD_DIF_Summary$Scores <- OD_DIF_PredictedScores
+OD_DIF_Summary$Label <- rep("DIF", nrow(OD_DIF_Summary))
+
+densityplot( ~ Scores | Label,
+            data = OD_DIF_Summary,
+            groups = Status,
+            xlab = "Deviance Scores",
+            ylab = "Density",
+            auto.key = list(columns = (length(levels(OD_DIF_Summary$Status)))))
+
+##################################
+# Determining the apparent 
+# discrimination performance
+# of the DIF Algorithm
+##################################
+Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
+
+(OD_DIF_ROCCurveAUC <- AUC(OD_DIF_PredictedScores, Status))
+
+```
+
 ##  1.6 Algorithm Comparison Summary
 |
 | Algorithm performance comparison:
