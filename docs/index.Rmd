@@ -612,7 +612,7 @@ OD_IF_DevianceScores <- predict(OD_IF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_IF_DevianceScores,
-                 "Deviance Scores : Isolation Forest",
+                 "Deviance Scores : Isolation Forest (IF)",
                  1.0)
 
 ##################################
@@ -642,7 +642,7 @@ densityplot( ~ Scores | Label,
             auto.key = list(columns = (length(levels(OD_IF_Summary$Status)))))
 
 ##################################
-# Determining the apparent 
+# Evaluating the apparent 
 # discrimination performance
 # of the IF Algorithm
 ##################################
@@ -654,7 +654,7 @@ Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 
 ###  1.5.2. Extended Isolation Forest (EIF)
 |
-| **[A]** The Extended Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The Extended Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 3 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -686,7 +686,7 @@ OD_EIF_DevianceScores <- predict(OD_EIF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_EIF_DevianceScores,
-                 "Deviance Scores : Extended Isolation Forest",
+                 "Deviance Scores : Extended Isolation Forest (EIF)",
                  1.0)
 
 ##################################
@@ -716,7 +716,7 @@ densityplot( ~ Scores | Label,
             auto.key = list(columns = (length(levels(OD_EIF_Summary$Status)))))
 
 ##################################
-# Determining the apparent 
+# Evaluating the apparent 
 # discrimination performance
 # of the EIF Algorithm
 ##################################
@@ -728,7 +728,7 @@ Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 
 ###  1.5.3. Isolation Forest with Split Selection Criterion (SCIFOREST)
 |
-| **[A]** The Isolation Forest with Split Selection Criterion algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The Isolation Forest with Split Selection Criterion algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 5 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -766,7 +766,7 @@ OD_SCIFOREST_DevianceScores <- predict(OD_SCIFOREST, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_SCIFOREST_DevianceScores,
-                 "Deviance Scores : Isolation Forest with Split Selection Criterion",
+                 "Deviance Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
                  1.0)
 
 ##################################
@@ -796,7 +796,7 @@ densityplot( ~ Scores | Label,
             auto.key = list(columns = (length(levels(OD_SCIFOREST_Summary$Status)))))
 
 ##################################
-# Determining the apparent 
+# Evaluating the apparent 
 # discrimination performance
 # of the SCIFOREST Algorithm
 ##################################
@@ -808,7 +808,7 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 
 ###  1.5.4. Fair-Cut Forest (FCF)
 |
-| **[A]** The Fair-Cut Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The Fair-Cut Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 4 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -842,7 +842,7 @@ OD_FCF_DevianceScores <- predict(OD_FCF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_FCF_DevianceScores,
-                 "Deviance Scores : Fair-Cut Forest",
+                 "Deviance Scores : Fair-Cut Forest (FCF)",
                  1.0)
 
 ##################################
@@ -872,7 +872,7 @@ densityplot( ~ Scores | Label,
             auto.key = list(columns = (length(levels(OD_FCF_Summary$Status)))))
 
 ##################################
-# Determining the apparent 
+# Evaluating the apparent 
 # discrimination performance
 # of the FCF Algorithm
 ##################################
@@ -884,16 +884,16 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 
 ###  1.5.5. Density Isolation Forest (DIF)
 |
-| **[A]** The Density Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The Density Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 4 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
 |      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
 |      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
-|      **[B.4]** <span style="color: #FF0000">scoring_metric</span> = metric to use for determining outlier scores held constant at a value of "DENSITY".
+|      **[B.4]** <span style="color: #FF0000">scoring_metric</span> = metric to use for Determining outlier scores held constant at a value of "DENSITY".
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
-|      **[C.1]** ROC Curve AUC = 0.77322
+|      **[C.1]** ROC Curve AUC = 0.77588
 |
 ```{r section_1.5.5, warning=FALSE, message=FALSE}
 ##################################
@@ -903,8 +903,7 @@ OD_DIF <- isolation.forest(OD,
                           ndim=2, 
                           ntrees=100, 
                           missing_action="fail",
-                          scoring_metric="density",
-                          sample_size=256)
+                          scoring_metric="density")
 
 ##################################
 # Determining the outlier scores
@@ -919,7 +918,7 @@ OD_DIF_DevianceScores <- predict(OD_DIF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_DIF_DevianceScores,
-                 "Deviance Scores : Density Isolation Forest",
+                 "Deviance Scores : Density Isolation Forest (DIF)",
                  1.0)
 
 ##################################
@@ -949,13 +948,89 @@ densityplot( ~ Scores | Label,
             auto.key = list(columns = (length(levels(OD_DIF_Summary$Status)))))
 
 ##################################
-# Determining the apparent 
+# Evaluating the apparent 
 # discrimination performance
 # of the DIF Algorithm
 ##################################
 Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
 
 (OD_DIF_ROCCurveAUC <- AUC(OD_DIF_PredictedScores, Status))
+
+```
+
+###  1.5.6. Boxed Isolation Forest (DIF)
+|
+| **[A]** The Boxed Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+|
+| **[B]** The algorithm contains 4 hyperparameters:
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 100.
+|      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
+|      **[B.4]** <span style="color: #FF0000">scoring_metric</span> = metric to use for Determining outlier scores held constant at a value of "BOXED_RATIO".
+|
+| **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
+|      **[C.1]** ROC Curve AUC = 0.57868
+|
+```{r section_1.5.6, warning=FALSE, message=FALSE}
+##################################
+# Implementing the BIF Algorithm
+##################################
+OD_BIF <- isolation.forest(OD, 
+                          ndim=2, 
+                          ntrees=100, 
+                          missing_action="fail",
+                          scoring_metric="boxed_ratio")
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the entire space range
+##################################
+OD_BIF_DevianceScores <- predict(OD_BIF, Space_Range)
+
+##################################
+# Plotting the heatmap
+# for the deviant points
+##################################
+par(mar = c(2.5,2.2,2,2.5))
+Plot_Space_Range(OD_BIF_DevianceScores,
+                 "Deviance Scores : Boxed Isolation Forest (BIF)",
+                 1.0)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the dataset
+##################################
+OD_BIF_PredictedScores <- predict(OD_BIF, OD)
+
+##################################
+# Exploring the outlier scores
+# between the valid and outlier points
+##################################
+max(OD_BIF_PredictedScores)
+min(OD_BIF_PredictedScores)
+
+OD_BIF_Summary <- DR_PCA_SUBSET
+
+OD_BIF_Summary$Scores <- OD_BIF_PredictedScores
+OD_BIF_Summary$Label <- rep("BIF", nrow(OD_BIF_Summary))
+
+densityplot( ~ Scores | Label,
+            data = OD_BIF_Summary,
+            groups = Status,
+            xlab = "Deviance Scores",
+            ylab = "Density",
+            auto.key = list(columns = (length(levels(OD_BIF_Summary$Status)))))
+
+##################################
+# Evaluating the apparent 
+# discrimination performance
+# of the BIF Algorithm
+##################################
+Status <- ifelse(OD_BIF_Summary$Status=="Valid",0,1)
+
+(OD_BIF_ROCCurveAUC <- AUC(OD_BIF_PredictedScores, Status))
 
 ```
 
@@ -974,142 +1049,91 @@ Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
 |             **[A.3.1]** Outlier Detection Rate = 0.37500
 |             **[A.3.2]** Rand Index = 0.82667
 |
-```{r section_1.5.6, warning=FALSE, message=FALSE}
+```{r section_1.6, warning=FALSE, message=FALSE}
 
-# ##################################
-# # Replotting the cluster plots for PCA-BASE
-# ##################################
-# CA_PCABASE_ClusterPlot <- cloud(PC1 ~ PC2*PC3 | Algorithm,
-#       groups = EDA$Cancer,
-#        data = EDA,
-#        type = "p",
-#        pch = 16,
-#        cex = 2,
-#        alpha = 0.45,
-#        auto.key = list(points = TRUE, space = "top"))
-# 
-# ##################################
-# # Replotting the cluster plots for DBSCAN
-# ##################################
-# CA_DBSCAN_ClusterPlot <- cloud(PC1 ~ PC2*PC3 | Algorithm,
-#       groups = CA_DBSCAN_Summary$DBSCAN_Cluster,
-#        data = CA_DBSCAN_Summary,
-#        type = "p",
-#        pch = 16,
-#        cex = 2,
-#        alpha = 0.45,
-#        auto.key = list(points = TRUE, space = "top"))
-# 
-# ##################################
-# # Replotting the cluster plots for HDBSCAN
-# ##################################
-# CA_HDBSCAN_ClusterPlot <- cloud(PC1 ~ PC2*PC3 | Algorithm,
-#       groups = CA_HDBSCAN_Summary$HDBSCAN_Cluster,
-#        data = CA_HDBSCAN_Summary,
-#        type = "p",
-#        pch = 16,
-#        cex = 2,
-#        alpha = 0.45,
-#        auto.key = list(points = TRUE, space = "top"))
-# 
-# ##################################
-# # Replotting the cluster plots for OPTICS
-# ##################################
-# CA_OPTICS_ClusterPlot <- cloud(PC1 ~ PC2*PC3 | Algorithm,
-#       groups = CA_OPTICS_Summary$OPTICS_Cluster,
-#        data = CA_OPTICS_Summary,
-#        type = "p",
-#        pch = 16,
-#        cex = 2,
-#        alpha = 0.45,
-#        auto.key = list(points = TRUE, space = "top"))
-# 
-# ##################################
-# # Replotting the cluster plots for JPCLUST
-# ##################################
-# CA_JPCLUST_ClusterPlot <- cloud(PC1 ~ PC2*PC3 | Algorithm,
-#       groups = CA_JPCLUST_Summary$JPCLUST_Cluster,
-#        data = CA_JPCLUST_Summary,
-#        type = "p",
-#        pch = 16,
-#        cex = 2,
-#        alpha = 0.45,
-#        auto.key = list(points = TRUE, space = "top"))
-# 
-# ##################################
-# # Replotting the cluster plots for SNNCLUST
-# ##################################
-# CA_SNNCLUST_ClusterPlot <- cloud(PC1 ~ PC2*PC3 | Algorithm,
-#       groups = CA_SNNCLUST_Summary$SNNCLUST_Cluster,
-#        data = CA_SNNCLUST_Summary,
-#        type = "p",
-#        pch = 16,
-#        cex = 2,
-#        alpha = 0.45,
-#        auto.key = list(points = TRUE, space = "top"))
-# 
-# ####################################################################
-# # Consolidating all algorithm performance results
-# ####################################################################
-# grid.arrange(CA_PCABASE_ClusterPlot,
-#              CA_SNNCLUST_ClusterPlot,
-#              CA_DBSCAN_ClusterPlot,
-#              CA_OPTICS_ClusterPlot,
-#              CA_JPCLUST_ClusterPlot,
-#              CA_HDBSCAN_ClusterPlot,
-#              ncol=3)
-# 
-# ##################################
-# # Consolidating all 
-# # outlier detection rates and rand indices
-# # for the analysis data
-# ##################################
-# ClusteringAlgorithm <- c('DBSCAN','HDBSCAN','OPTICS','JPCLUST','SNNCLUST',
-#                          'DBSCAN','HDBSCAN','OPTICS','JPCLUST','SNNCLUST')
-# 
-# Set <- c(rep('Outlier Detection Rate',5),
-#          rep('Rand Index',5))
-# 
-# ClusteringMetrics <- c(CA_DBSCAN_OutlierDetectionRate,
-#                        CA_HDBSCAN_OutlierDetectionRate,
-#                        CA_OPTICS_OutlierDetectionRate,
-#                        CA_JPCLUST_OutlierDetectionRate,
-#                        CA_SNNCLUST_OutlierDetectionRate,
-#                        CA_DBSCAN_RandIndex,
-#                        CA_HDBSCAN_RandIndex,
-#                        CA_OPTICS_RandIndex,
-#                        CA_JPCLUST_RandIndex,
-#                        CA_SNNCLUST_RandIndex)
-# 
-# ClusteringPeformance_Summary <- as.data.frame(cbind(ClusteringAlgorithm,
-#                                                     Set,
-#                                                     ClusteringMetrics))
-# 
-# ClusteringPeformance_Summary$ClusteringMetrics <- as.numeric(as.character(ClusteringPeformance_Summary$ClusteringMetrics))
-# ClusteringPeformance_Summary$Set <- factor(ClusteringPeformance_Summary$Set,
-#                                            levels = c("Outlier Detection Rate",
-#                                                       "Rand Index"))
-# ClusteringPeformance_Summary$ClusteringAlgorithm <- factor(ClusteringPeformance_Summary$ClusteringAlgorithm,
-#                                                       levels = c('DBSCAN',
-#                                                                  'HDBSCAN',
-#                                                                  'OPTICS',
-#                                                                  'JPCLUST',
-#                                                                  'SNNCLUST'))
-# 
-# print(ClusteringPeformance_Summary, row.names=FALSE)
-# 
-# (ClusteringPeformance_Summary_Plot <- dotplot(ClusteringAlgorithm ~ ClusteringMetrics,
-#                           data = ClusteringPeformance_Summary,
-#                           groups = Set,
-#                           main = "Clustering Algorithm Performance Comparison",
-#                           ylab = "Algorithm",
-#                           xlab = "Clustering Performance Metrics",
-#                           auto.key = list(adj = 1),
-#                           type=c("p", "h"),
-#                           origin = 0,
-#                           alpha = 0.45,
-#                           pch = 16,
-#                           cex = 2))
+##################################
+# Replotting the density plots
+##################################
+OD_Summary <- rbind(OD_IF_Summary,
+                    OD_EIF_Summary,
+                    OD_SCIFOREST_Summary,
+                    OD_FCF_Summary,
+                    OD_DIF_Summary,
+                    OD_BIF_Summary)
+
+##################################
+# Replotting the heatmaps
+##################################
+par(mfrow=c(3,2),
+    mar = c(2.5,2.2,2,2.5))
+
+Plot_Space_Range(OD_IF_DevianceScores,
+                 "Deviance Scores : Isolation Forest (IF)",
+                 1.0)
+
+Plot_Space_Range(OD_EIF_DevianceScores,
+                 "Deviance Scores : Extended Isolation Forest (EIF)",
+                 1.0)
+
+Plot_Space_Range(OD_SCIFOREST_DevianceScores,
+                 "Deviance Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
+                 1.0)
+
+Plot_Space_Range(OD_FCF_DevianceScores,
+                 "Deviance Scores : Fair-Cut Forest (FCF)",
+                 1.0)
+
+Plot_Space_Range(OD_DIF_DevianceScores,
+                 "Deviance Scores : Density Isolation Forest (DIF)",
+                 1.0)
+
+Plot_Space_Range(OD_BIF_DevianceScores,
+                 "Deviance Scores : Boxed Isolation Forest (BIF)",
+                 1.0)
+
+##################################
+# Consolidating all evaluation results
+# using the apparent ROC Curve AUC metric
+##################################
+OutlierDetectionAlgorithm <- c('IF','EIF','SCIFOREST',
+                               'FCF','DIF','BIF')
+
+Set <- c(rep('ROC Curve AUC',6))
+
+OutlierDetectionMetrics <- c(OD_IF_ROCCurveAUC,
+                             OD_EIF_ROCCurveAUC,
+                             OD_SCIFOREST_ROCCurveAUC,
+                             OD_FCF_ROCCurveAUC,
+                             OD_DIF_ROCCurveAUC,
+                             OD_BIF_ROCCurveAUC)
+
+OutlierDetectionPeformance_Summary <- as.data.frame(cbind(OutlierDetectionAlgorithm,
+                                                    Set,
+                                                    OutlierDetectionMetrics))
+
+OutlierDetectionPeformance_Summary$OutlierDetectionMetrics <- as.numeric(as.character(OutlierDetectionPeformance_Summary$OutlierDetectionMetrics))
+OutlierDetectionPeformance_Summary$OutlierDetectionAlgorithm <- factor(OutlierDetectionPeformance_Summary$OutlierDetectionAlgorithm,
+                                                      levels = c('IF',
+                                                                 'EIF',
+                                                                 'SCIFOREST',
+                                                                 'FCF',
+                                                                 'DIF',
+                                                                 'BIF'))
+
+print(OutlierDetectionPeformance_Summary, row.names=FALSE)
+
+(OutlierDetectionPeformance_Summary_Plot <- dotplot(OutlierDetectionAlgorithm ~ OutlierDetectionMetrics,
+                          data = OutlierDetectionPeformance_Summary,
+                          groups = Set,
+                          main = "Outlier Detection Algorithm Performance Comparison",
+                          ylab = "Algorithm",
+                          xlab = "Outlier Detection Performance Metrics",
+                          auto.key = list(adj = 1),
+                          type=c("p", "h"),
+                          origin = 0,
+                          alpha = 0.45,
+                          pch = 16,
+                          cex = 2))
 
 ```
 
@@ -1146,7 +1170,7 @@ Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
 | **[R Package]** [dbscan](https://cran.r-project.org/web/packages/dbscan/dbscan.pdf) by Michael Hahsler
 | **[R Package]** [fossil](https://cran.r-project.org/web/packages/fossil/fossil.pdf) by Matthew Vavrek
 | **[Article]** [Cluster Analysis in R Simplified and Enhanced](https://www.datanovia.com/en/blog/cluster-analysis-in-r-simplified-and-enhanced/) by Datanovia Team
-| **[Article]** [Cluster Validation Essentials](http://www.sthda.com/english/articles/29-cluster-validation-essentials/96-determiningthe-optimal-number-of-clusters-3-must-know-methods/) by Alboukadel Kassambara
+| **[Article]** [Cluster Validation Essentials](http://www.sthda.com/english/articles/29-cluster-validation-essentials/96-Determiningthe-optimal-number-of-clusters-3-must-know-methods/) by Alboukadel Kassambara
 | **[Article]** [Data Preparation and R Packages for Cluster Analysis](https://www.datanovia.com/en/lessons/data-preparation-and-r-packages-for-cluster-analysis/) by Datanovia Team
 | **[Article]** [The Complete Guide to Clustering Analysis: K-Means and Hierarchical Clustering by Hand and in R](https://statsandr.com/blog/clustering-analysis-k-means-and-hierarchical-clustering-by-hand-and-in-r/#silhouette-method) by Antoine Soetewey
 | **[Article]** [Clustering](https://scikit-learn.org/stable/modules/clustering.html) by Scikit-Learn Team
