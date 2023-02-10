@@ -1,5 +1,5 @@
 ---
-title: "R : Estimating Deviance Scores Using Isolation Forest-Based Outlier Detection Algorithms"
+title: "R : Estimating Outlier Scores Using Isolation Forest-Based Anomaly Detection Algorithms"
 author: "John Pauline Pineda"
 date: "February 11, 2023"
 output: 
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.width=15, fig.height=10)
 ```
 # **1. Table of Contents**
 |
-| This document implements isolation forest-based outlier detection algorithms for estimating scores for deviant points using various helpful packages in <mark style="background-color: #CCECFF">**R**</mark>.    
+| This document implements isolation forest-based anomaly detection algorithms for estimating outlier scores using various helpful packages in <mark style="background-color: #CCECFF">**R**</mark>.    
 |
 ##  1.1 Sample Data
 |
@@ -454,7 +454,7 @@ DR_PCA$x <- as.data.frame(DR_PCA$x)
 |             **[B.1.1]** Overlapping orthogonal clustering patterns observed between the <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span> cases with the pairwise comparison across the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> variables.
 |             **[B.1.2]** Overlapping concentric clustering patterns observed between the <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span> cases with the pairwise comparison across the <span style="color: #FF0000">PC5</span>, <span style="color: #FF0000">PC7</span> and <span style="color: #FF0000">PC9</span> variables.
 |
-| **[C]** To better visualize deviance scores through a heatmap, the subsequent analysis will be conducted using the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> variables.
+| **[C]** To better visualize outlier scores through a heatmap, the subsequent analysis will be conducted using the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> variables.
 |
 ```{r section_1.4, warning=FALSE, message=FALSE}
 ##################################
@@ -540,7 +540,7 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ```
 
-## 1.5 Isolation Forest-Based Outlier Detection
+## 1.5 Isolation Forest-Based anomaly detection
 
 ###  1.5.1. Isolation Forest (IF)
 |
@@ -562,7 +562,7 @@ OD <- as.data.frame(DR_PCA_SUBSET[,c(2:3)])
 
 ##################################
 # Creating a function to create 
-# a heatmap of the deviance scores
+# a heatmap of the outlier scores
 ##################################
 Point_Range = seq(-15, 15, .1)
 Space_Range <- expand.grid(PC1=Point_Range, PC2=Point_Range)
@@ -601,23 +601,23 @@ OD_IF <- isolation.forest(OD,
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the entire space range
 ##################################
 OD_IF_DevianceScores <- predict(OD_IF, Space_Range)
 
 ##################################
 # Plotting the heatmap
-# for the deviant points
+# for anomaly detection
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_IF_DevianceScores,
-                 "Deviance Scores : Isolation Forest (IF)",
+                 "outlier scores : Isolation Forest (IF)",
                  1.0)
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the dataset
 ##################################
 OD_IF_PredictedScores <- predict(OD_IF, OD)
@@ -637,7 +637,7 @@ OD_IF_Summary$Label <- rep("IF", nrow(OD_IF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_IF_Summary,
             groups = Status,
-            xlab = "Deviance Scores",
+            xlab = "outlier scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_IF_Summary$Status)))))
 
@@ -675,23 +675,23 @@ OD_EIF <- isolation.forest(OD,
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the entire space range
 ##################################
 OD_EIF_DevianceScores <- predict(OD_EIF, Space_Range)
 
 ##################################
 # Plotting the heatmap
-# for the deviant points
+# for anomaly detection
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_EIF_DevianceScores,
-                 "Deviance Scores : Extended Isolation Forest (EIF)",
+                 "outlier scores : Extended Isolation Forest (EIF)",
                  1.0)
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the dataset
 ##################################
 OD_EIF_PredictedScores <- predict(OD_EIF, OD)
@@ -711,7 +711,7 @@ OD_EIF_Summary$Label <- rep("EIF", nrow(OD_EIF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_EIF_Summary,
             groups = Status,
-            xlab = "Deviance Scores",
+            xlab = "outlier scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_EIF_Summary$Status)))))
 
@@ -755,23 +755,23 @@ OD_SCIFOREST <- isolation.forest(OD,
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the entire space range
 ##################################
 OD_SCIFOREST_DevianceScores <- predict(OD_SCIFOREST, Space_Range)
 
 ##################################
 # Plotting the heatmap
-# for the deviant points
+# for anomaly detection
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_SCIFOREST_DevianceScores,
-                 "Deviance Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
+                 "outlier scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
                  1.0)
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the dataset
 ##################################
 OD_SCIFOREST_PredictedScores <- predict(OD_SCIFOREST, OD)
@@ -791,7 +791,7 @@ OD_SCIFOREST_Summary$Label <- rep("SCIFOREST", nrow(OD_SCIFOREST_Summary))
 densityplot( ~ Scores | Label,
             data = OD_SCIFOREST_Summary,
             groups = Status,
-            xlab = "Deviance Scores",
+            xlab = "outlier scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_SCIFOREST_Summary$Status)))))
 
@@ -831,23 +831,23 @@ OD_FCF <- isolation.forest(OD,
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the entire space range
 ##################################
 OD_FCF_DevianceScores <- predict(OD_FCF, Space_Range)
 
 ##################################
 # Plotting the heatmap
-# for the deviant points
+# for anomaly detection
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_FCF_DevianceScores,
-                 "Deviance Scores : Fair-Cut Forest (FCF)",
+                 "outlier scores : Fair-Cut Forest (FCF)",
                  1.0)
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the dataset
 ##################################
 OD_FCF_PredictedScores <- predict(OD_FCF, OD)
@@ -867,7 +867,7 @@ OD_FCF_Summary$Label <- rep("FCF", nrow(OD_FCF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_FCF_Summary,
             groups = Status,
-            xlab = "Deviance Scores",
+            xlab = "outlier scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_FCF_Summary$Status)))))
 
@@ -907,23 +907,23 @@ OD_DIF <- isolation.forest(OD,
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the entire space range
 ##################################
 OD_DIF_DevianceScores <- predict(OD_DIF, Space_Range)
 
 ##################################
 # Plotting the heatmap
-# for the deviant points
+# for anomaly detection
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_DIF_DevianceScores,
-                 "Deviance Scores : Density Isolation Forest (DIF)",
+                 "outlier scores : Density Isolation Forest (DIF)",
                  1.0)
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the dataset
 ##################################
 OD_DIF_PredictedScores <- predict(OD_DIF, OD)
@@ -943,7 +943,7 @@ OD_DIF_Summary$Label <- rep("DIF", nrow(OD_DIF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_DIF_Summary,
             groups = Status,
-            xlab = "Deviance Scores",
+            xlab = "outlier scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_DIF_Summary$Status)))))
 
@@ -983,23 +983,23 @@ OD_BIF <- isolation.forest(OD,
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the entire space range
 ##################################
 OD_BIF_DevianceScores <- predict(OD_BIF, Space_Range)
 
 ##################################
 # Plotting the heatmap
-# for the deviant points
+# for anomaly detection
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_BIF_DevianceScores,
-                 "Deviance Scores : Boxed Isolation Forest (BIF)",
+                 "outlier scores : Boxed Isolation Forest (BIF)",
                  1.0)
 
 ##################################
 # Determining the outlier scores
-# for the deviant points
+# for anomaly detection
 # applied to the dataset
 ##################################
 OD_BIF_PredictedScores <- predict(OD_BIF, OD)
@@ -1019,7 +1019,7 @@ OD_BIF_Summary$Label <- rep("BIF", nrow(OD_BIF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_BIF_Summary,
             groups = Status,
-            xlab = "Deviance Scores",
+            xlab = "outlier scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_BIF_Summary$Status)))))
 
@@ -1038,16 +1038,11 @@ Status <- ifelse(OD_BIF_Summary$Status=="Valid",0,1)
 |
 | Algorithm performance comparison:
 |
-| **[A]** The density-based clustering algorithms applied to the principal component descriptors which were able to sufficiently capture the latent characteristics between the different cancer groups and identify multivariate outliers based on the higher estimated Rand indices and reasonable outlier detection rates are the following :
-|      **[A.1]** SNNCLUST : Shared Nearest Neighbor Clustering (<mark style="background-color: #CCECFF">**dbscan**</mark> package)
-|             **[A.1.1]** Outlier Detection Rate = 0.40000
-|             **[A.2.1]** Rand Index = 0.93115
-|      **[A.2]** DBSCAN: Density-Based Spatial Clustering of Applications with Noise (<mark style="background-color: #CCECFF">**dbscan**</mark> package)
-|             **[A.2.1]** Outlier Detection Rate = 0.32500
-|             **[A.2.2]** Rand Index = 0.83190
-|      **[A.3]** OPTICS: Ordering Points to Identify the Clustering Structure (<mark style="background-color: #CCECFF">**dbscan**</mark> package)
-|             **[A.3.1]** Outlier Detection Rate = 0.37500
-|             **[A.3.2]** Rand Index = 0.82667
+| **[A]** The isolation forest-based anomaly detection algorithms applied to the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors which were able to sufficiently capture the deviant points based on the higher estimated ROC curve AUC are the following :
+|      **[A.1]** FCF : Fair-Cut Forest (<mark style="background-color: #CCECFF">**isotree**</mark> package)
+|             **[A.1.1]** ROC Curve AUC = 0.78291
+|      **[A.2]** DIF: Density Isolation Forest (<mark style="background-color: #CCECFF">**isotree**</mark> package)
+|             **[A.2.1]** ROC Curve AUC = 0.77588
 |
 ```{r section_1.6, warning=FALSE, message=FALSE}
 
@@ -1068,27 +1063,27 @@ par(mfrow=c(3,2),
     mar = c(2.5,2.2,2,2.5))
 
 Plot_Space_Range(OD_IF_DevianceScores,
-                 "Deviance Scores : Isolation Forest (IF)",
+                 "outlier scores : Isolation Forest (IF)",
                  1.0)
 
 Plot_Space_Range(OD_EIF_DevianceScores,
-                 "Deviance Scores : Extended Isolation Forest (EIF)",
+                 "outlier scores : Extended Isolation Forest (EIF)",
                  1.0)
 
 Plot_Space_Range(OD_SCIFOREST_DevianceScores,
-                 "Deviance Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
+                 "outlier scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
                  1.0)
 
 Plot_Space_Range(OD_FCF_DevianceScores,
-                 "Deviance Scores : Fair-Cut Forest (FCF)",
+                 "outlier scores : Fair-Cut Forest (FCF)",
                  1.0)
 
 Plot_Space_Range(OD_DIF_DevianceScores,
-                 "Deviance Scores : Density Isolation Forest (DIF)",
+                 "outlier scores : Density Isolation Forest (DIF)",
                  1.0)
 
 Plot_Space_Range(OD_BIF_DevianceScores,
-                 "Deviance Scores : Boxed Isolation Forest (BIF)",
+                 "outlier scores : Boxed Isolation Forest (BIF)",
                  1.0)
 
 ##################################
@@ -1125,9 +1120,9 @@ print(OutlierDetectionPeformance_Summary, row.names=FALSE)
 (OutlierDetectionPeformance_Summary_Plot <- dotplot(OutlierDetectionAlgorithm ~ OutlierDetectionMetrics,
                           data = OutlierDetectionPeformance_Summary,
                           groups = Set,
-                          main = "Outlier Detection Algorithm Performance Comparison",
+                          main = "anomaly detection Algorithm Performance Comparison",
                           ylab = "Algorithm",
-                          xlab = "Outlier Detection Performance Metrics",
+                          xlab = "anomaly detection Performance Metrics",
                           auto.key = list(adj = 1),
                           type=c("p", "h"),
                           origin = 0,
@@ -1163,37 +1158,22 @@ print(OutlierDetectionPeformance_Summary, row.names=FALSE)
 | **[R Package]** [rattle](https://cran.r-project.org/web/packages/rattle/rattle.pdf) by Graham Williams
 | **[R Package]** [RColorBrewer](https://cran.r-project.org/web//packages/RColorBrewer/RColorBrewer.pdf) by Erich Neuwirth
 | **[R Package]** [stats](https://search.r-project.org/R/refmans/stats/html/00Index.html) by R Core Team
-| **[R Package]** [ISLR](https://cran.r-project.org/web/packages/ISLR/ISLR.pdf) by Trevor Hastie
-| **[R Package]** [factoextra](https://cran.r-project.org/web/packages/factoextra/factoextra.pdf) by Alboukadel Kassambara
-| **[R Package]** [NbClust](https://cran.r-project.org/web/packages/NbClust/NbClust.pdf) by Malika Charrad, Nadia Ghazzali, Veronique Boiteau and Azam Niknafs
-| **[R Package]** [cluster](https://cran.r-project.org/web/packages/cluster/cluster.pdf) by Martin Maechler
-| **[R Package]** [dbscan](https://cran.r-project.org/web/packages/dbscan/dbscan.pdf) by Michael Hahsler
-| **[R Package]** [fossil](https://cran.r-project.org/web/packages/fossil/fossil.pdf) by Matthew Vavrek
-| **[Article]** [Cluster Analysis in R Simplified and Enhanced](https://www.datanovia.com/en/blog/cluster-analysis-in-r-simplified-and-enhanced/) by Datanovia Team
-| **[Article]** [Cluster Validation Essentials](http://www.sthda.com/english/articles/29-cluster-validation-essentials/96-Determiningthe-optimal-number-of-clusters-3-must-know-methods/) by Alboukadel Kassambara
-| **[Article]** [Data Preparation and R Packages for Cluster Analysis](https://www.datanovia.com/en/lessons/data-preparation-and-r-packages-for-cluster-analysis/) by Datanovia Team
-| **[Article]** [The Complete Guide to Clustering Analysis: K-Means and Hierarchical Clustering by Hand and in R](https://statsandr.com/blog/clustering-analysis-k-means-and-hierarchical-clustering-by-hand-and-in-r/#silhouette-method) by Antoine Soetewey
-| **[Article]** [Clustering](https://scikit-learn.org/stable/modules/clustering.html) by Scikit-Learn Team
-| **[Article]** [Practical Guide to Clustering Algorithms & Evaluation in R](https://www.hackerearth.com/practice/machine-learning/machine-learning-algorithms/clustering-algorithms-evaluation-r/tutorial/) by Hacker Earth Team
-| **[Article]** [Measures for Comparing Clustering Algorithms](https://www.datanovia.com/en/lessons/choosing-the-best-clustering-algorithms/#:~:text=Compare%20clustering%20algorithms%20in%20R%20We%E2%80%99ll%20use%20the,%22average%22%29%20obj%3A%20A%20numeric%20matrix%20or%20data%20frame.) by Datanovia Team
-| **[Article]** [DBSCAN Algorithm | How Does It Work?](https://www.mygreatlearning.com/blog/dbscan-algorithm/) by Pavan Kumar Raja
-| **[Article]** [DBSCAN Clustering in ML | Density Based Clustering](https://www.geeksforgeeks.org/dbscan-clustering-in-ml-density-based-clustering/) by Geeks For Geeks Team
-| **[Article]** [Density-Based Spatial Clustering of Applications with Noise (DBSCAN)](https://ml-explained.com/blog/dbscan-explained) by Machine Learning Explained Team
-| **[Article]** [Visualizing DBSCAN Clustering](https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/) by Naftali Harris 
-| **[Article]** [Demo of OPTICS Clustering Algorithm](https://scikit-learn.org/stable/auto_examples/cluster/plot_optics.html) by Scikit-Learn Team
-| **[Article]** [ML | OPTICS Clustering Explanation](https://www.geeksforgeeks.org/ml-optics-clustering-explanation/) by Geeks For Geeks Team
-| **[Article]** [Comparing Different Clustering Algorithms on Toy Datasets](xxx) by Scikit-Learn Team
-| **[Article]** [How HDBSCAN Works](https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html) by HDBSCAN Team
-| **[Article]** [Understanding HDBSCAN and Density-Based Clustering](https://pberba.github.io/stats/2020/01/17/hdbscan/) by Pepe Berba
-| **[Article]** [SNN Clustering](http://mlwiki.org/index.php/SNN_Clustering) by Alexey Grigorev
-| **[Article]** [Basic Understanding of Jarvis-Patrick Clustering Algorithm](https://www.geeksforgeeks.org/basic-understanding-of-jarvis-patrick-clustering-algorithm/) by Geeks For Geeks Team
-| **[Article]** [Jarvis-Patrick Clustering](https://docs.chemaxon.com/display/docs/jarvis-patrick-clustering.md) by Chemaxon Team
-| **[Article]** [Which Are The Best Clustering Metrics? (Explained Simply)](https://stephenallwright.com/good-clustering-metrics/) by Stephen Allwright
-| **[Article]** [Elbow Method vs Silhouette Score – Which is Better?](https://vitalflux.com/elbow-method-silhouette-score-which-better/) by Ajitesh Kumar
-| **[Article]** [Assessment Metrics for Clustering Algorithms](https://opendatascience.com/assessment-metrics-clustering-algorithms/) by Spencer Norris
-| **[Article]** [Clustering Performance Evaluation in Scikit Learn](https://www.geeksforgeeks.org/clustering-performance-evaluation-in-scikit-learn/) by Geeks For Geeks Team
-| **[Article]** [Taxonomy of Data Clustering Methods](https://1library.net/article/taxonomy-data-clustering-methods-overview-data-clustering-tools.y8p5nn4z) by Yun Lillian Li
-| **[Publication]** [Finding Clusters of Different Sizes, Shapes, and Densities in Noisy, High Dimensional Data](https://epubs.siam.org/doi/10.1137/1.9781611972733.5) by Levent Ertöz, Michael Steinbach, and Vipin Kumar (Proceedings of the 2003 SIAM International Conference on Data Mining)
+| **[R Package]** [Hmisc](https://cran.r-project.org/web/packages/Hmisc/Hmisc.pdf) by Frank Harrell
+| **[R Package]** [isotree](https://cran.r-project.org/web/packages/isotree/isotree.pdf) by David Cortes
+| **[R Package]** [mlbench](https://cran.r-project.org/web/packages/mlbench/mlbench.pdf) by Friedrich Leisch and Evgenia Dimitriadou
+| **[R Package]** [MLmetrics](https://cran.r-project.org/web/packages/MLmetrics/MLmetrics.pdf) by Yachen Yan
+| **[Article]** [An Introduction to Isolation Forests](https://cran.r-project.org/web/packages/isotree/vignettes/An_Introduction_to_Isolation_Forests.html) by David Cortes
+| **[Article]** [Isolation Forest: The Art of Cutting Off From the World](https://quantdare.com/isolation-forest-algorithm/) by QuantDare Team
+| **[Article]** [Anomaly Detection with Isolation Forest and Kernel Density Estimation](https://machinelearningmastery.com/anomaly-detection-with-isolation-forest-and-kernel-density-estimation/) by Muhammad Asad Iqbal Khan
+| **[Article]** [Isolation Forest Algorithm for Anomaly Detection](https://arpitbhayani.me/blogs/isolation-forest) by Arpit Bhayani
+| **[Article]** [Isolation Forest Example](https://scikit-learn.org/stable/auto_examples/ensemble/plot_isolation_forest.html) by Scikit-Learn Team
+| **[Article]** [Isolation Forest for Anomaly Detection ](https://www.mathworks.com/help/stats/isolationforest.html) by Mathworks Team
+| **[Article]** [Machine Learning Interpretability For Isolation Forest Using SHAP](https://www.data4v.com/machine-learning-interpretability-for-isolation-forest-using-shap/) by Prasad Kulkarni
+| **[Article]** [What is Isolation Forest?](https://dsworld.org/what-is-an-isolation-forest/) by Data Science World Team
+| **[Article]** [Anomaly Detection: Isolation Forest Agorithm](https://majdarbash.github.io/aws-cmls/2019-11-21-isolation-forest-algorithm/) by Maj Darbash
+| **[Publication]** [Isolation Forest](https://ieeexplore.ieee.org/document/4781136/) by Fei Tony Liu, Kai Ming Ting and Zhi-Hua Zhou (2008 Eighth IEEE International Conference on Data Mining)
+| **[Publication]** [Isolation-Based Anomaly Detection](https://dl.acm.org/doi/10.1145/2133360.2133363) by Fei Tony Liu, Kai Ming Ting and Zhi-Hua Zhou (ACM Transactions on Knowledge Discovery from Data)
+| **[Publication]** [On Detecting Clustered Anomalies using SCiForest](https://link.springer.com/chapter/10.1007/978-3-642-15883-4_18) by Fei Tony Liu, Kai Ming Ting and Zhi-Hua Zhou (Joint European Conference on Machine Learning and Knowledge Discovery in Databases)
 | **[Course]** [Applied Data Mining and Statistical Learning](https://online.stat.psu.edu/stat508/) by Penn State Eberly College of Science
 |
 |
