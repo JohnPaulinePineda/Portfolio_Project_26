@@ -454,7 +454,7 @@ DR_PCA$x <- as.data.frame(DR_PCA$x)
 |             **[B.1.1]** Overlapping orthogonal clustering patterns observed between the <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span> cases with the pairwise comparison across the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> variables.
 |             **[B.1.2]** Overlapping concentric clustering patterns observed between the <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span> cases with the pairwise comparison across the <span style="color: #FF0000">PC5</span>, <span style="color: #FF0000">PC7</span> and <span style="color: #FF0000">PC9</span> variables.
 |
-| **[C]** To better visualize deviance scores through a heatmap, the subsequent analysis will be conducted using the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> variables.
+| **[C]** To better visualize deviance scores through a heatmap, the subsequent analysis will be conducted using the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> variables.
 |
 ```{r section_1.4, warning=FALSE, message=FALSE}
 ##################################
@@ -515,8 +515,8 @@ splom(~EDA[,sapply(EDA, is.numeric)],
       xlab = "PCA" )
 
 DR_PCA_SUBSET <- DR_PCA_FULL[,c("Status",
-                                "PC5",
-                                "PC7")]
+                                "PC1",
+                                "PC2")]
 
 describe(DR_PCA_SUBSET)
 
@@ -544,7 +544,7 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ###  1.5.1. Isolation Forest (IF)
 |
-| **[A]** The Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC5</span> and <span style="color: #FF0000">PC7</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 3 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 1.
@@ -552,7 +552,7 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 |      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their differentially expressed deviance score densities.
-|      **[C.1]** ROC Curve AUC = 0.70765
+|      **[C.1]** ROC Curve AUC = 0.76056
 |
 ```{r section_1.5.1, warning=FALSE, message=FALSE}
 ##################################
@@ -564,8 +564,8 @@ OD <- as.data.frame(DR_PCA_SUBSET[,c(2:3)])
 # Creating a function to create 
 # a heatmap of the deviance scores
 ##################################
-Point_Range = seq(-6, 6, .1)
-Space_Range <- expand.grid(PC5=Point_Range, PC7=Point_Range)
+Point_Range = seq(-15, 15, .1)
+Space_Range <- expand.grid(PC1=Point_Range, PC2=Point_Range)
 Plot_Space_Range <- function(Deviance_Scores, Title, cex.main = 1.4) {
     image(Point_Range, 
           Point_Range, 
@@ -574,16 +574,16 @@ Plot_Space_Range <- function(Deviance_Scores, Title, cex.main = 1.4) {
           col = rev(heat.colors(100)),
           main = Title, 
           cex.main = cex.main,
-          xlim = c(-6, 6), 
-          ylim = c(-6, 6),
-          xlab = "PC5", 
-          ylab = "PC7")
+          xlim = c(-15, 15), 
+          ylim = c(-15, 15),
+          xlab = "PC1", 
+          ylab = "PC2")
     par(new = TRUE)
     plot(OD, 
          type = "p",
          lwd = 10,
-         xlim = c(-6, 6), 
-         ylim = c(-6, 6),
+         xlim = c(-15, 15), 
+         ylim = c(-15, 15),
          col = "#0000001A",
          axes = FALSE, 
          main = "",
@@ -662,7 +662,7 @@ Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 |      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their differentially expressed deviance score densities.
-|      **[C.1]** ROC Curve AUC = 0.70587
+|      **[C.1]** ROC Curve AUC = 0.74786
 |
 ```{r section_1.5.2, warning=FALSE, message=FALSE}
 ##################################
@@ -740,7 +740,7 @@ standard distribution held constant at a value of "NORMAL".
 criterion on the same variable held constant at a value of 1.
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was not able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
-|      **[C.1]** ROC Curve AUC = 0.50761
+|      **[C.1]** ROC Curve AUC = 0.56143
 |
 ```{r section_1.5.3, warning=FALSE, message=FALSE}
 ##################################
@@ -817,7 +817,7 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 |      **[B.4]** <span style="color: #FF0000">prob_pick_pooled_gain</span> = indicates the probability of choosing the threshold on which to split a linear combination of variables as the threshold that maximizes a pooled standard deviation gain criterion on the linear combinantion held constant at a value of 1.
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
-|      **[C.1]** ROC Curve AUC = 0.70315
+|      **[C.1]** ROC Curve AUC = 0.78291
 |
 ```{r section_1.5.4, warning=FALSE, message=FALSE}
 ##################################
@@ -893,7 +893,7 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 |      **[B.4]** <span style="color: #FF0000">scoring_metric</span> = metric to use for determining outlier scores held constant at a value of "DENSITY".
 |
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
-|      **[C.1]** ROC Curve AUC = 0.70465
+|      **[C.1]** ROC Curve AUC = 0.77322
 |
 ```{r section_1.5.5, warning=FALSE, message=FALSE}
 ##################################
