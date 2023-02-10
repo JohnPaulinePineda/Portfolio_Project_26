@@ -612,7 +612,7 @@ OD_IF_DevianceScores <- predict(OD_IF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_IF_DevianceScores,
-                 "outlier scores : Isolation Forest (IF)",
+                 "Outlier Scores : Isolation Forest (IF)",
                  1.0)
 
 ##################################
@@ -637,7 +637,7 @@ OD_IF_Summary$Label <- rep("IF", nrow(OD_IF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_IF_Summary,
             groups = Status,
-            xlab = "outlier scores",
+            xlab = "Outlier Scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_IF_Summary$Status)))))
 
@@ -686,7 +686,7 @@ OD_EIF_DevianceScores <- predict(OD_EIF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_EIF_DevianceScores,
-                 "outlier scores : Extended Isolation Forest (EIF)",
+                 "Outlier Scores : Extended Isolation Forest (EIF)",
                  1.0)
 
 ##################################
@@ -711,7 +711,7 @@ OD_EIF_Summary$Label <- rep("EIF", nrow(OD_EIF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_EIF_Summary,
             groups = Status,
-            xlab = "outlier scores",
+            xlab = "Outlier Scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_EIF_Summary$Status)))))
 
@@ -766,7 +766,7 @@ OD_SCIFOREST_DevianceScores <- predict(OD_SCIFOREST, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_SCIFOREST_DevianceScores,
-                 "outlier scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
+                 "Outlier Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
                  1.0)
 
 ##################################
@@ -791,7 +791,7 @@ OD_SCIFOREST_Summary$Label <- rep("SCIFOREST", nrow(OD_SCIFOREST_Summary))
 densityplot( ~ Scores | Label,
             data = OD_SCIFOREST_Summary,
             groups = Status,
-            xlab = "outlier scores",
+            xlab = "Outlier Scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_SCIFOREST_Summary$Status)))))
 
@@ -842,7 +842,7 @@ OD_FCF_DevianceScores <- predict(OD_FCF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_FCF_DevianceScores,
-                 "outlier scores : Fair-Cut Forest (FCF)",
+                 "Outlier Scores : Fair-Cut Forest (FCF)",
                  1.0)
 
 ##################################
@@ -867,7 +867,7 @@ OD_FCF_Summary$Label <- rep("FCF", nrow(OD_FCF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_FCF_Summary,
             groups = Status,
-            xlab = "outlier scores",
+            xlab = "Outlier Scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_FCF_Summary$Status)))))
 
@@ -918,7 +918,7 @@ OD_DIF_DevianceScores <- predict(OD_DIF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_DIF_DevianceScores,
-                 "outlier scores : Density Isolation Forest (DIF)",
+                 "Outlier Scores : Density Isolation Forest (DIF)",
                  1.0)
 
 ##################################
@@ -943,7 +943,7 @@ OD_DIF_Summary$Label <- rep("DIF", nrow(OD_DIF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_DIF_Summary,
             groups = Status,
-            xlab = "outlier scores",
+            xlab = "Outlier Scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_DIF_Summary$Status)))))
 
@@ -994,7 +994,7 @@ OD_BIF_DevianceScores <- predict(OD_BIF, Space_Range)
 ##################################
 par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_BIF_DevianceScores,
-                 "outlier scores : Boxed Isolation Forest (BIF)",
+                 "Outlier Scores : Boxed Isolation Forest (BIF)",
                  1.0)
 
 ##################################
@@ -1019,7 +1019,7 @@ OD_BIF_Summary$Label <- rep("BIF", nrow(OD_BIF_Summary))
 densityplot( ~ Scores | Label,
             data = OD_BIF_Summary,
             groups = Status,
-            xlab = "outlier scores",
+            xlab = "Outlier Scores",
             ylab = "Density",
             auto.key = list(columns = (length(levels(OD_BIF_Summary$Status)))))
 
@@ -1063,27 +1063,27 @@ par(mfrow=c(3,2),
     mar = c(2.5,2.2,2,2.5))
 
 Plot_Space_Range(OD_IF_DevianceScores,
-                 "outlier scores : Isolation Forest (IF)",
+                 "Outlier Scores : Isolation Forest (IF)",
                  1.0)
 
 Plot_Space_Range(OD_EIF_DevianceScores,
-                 "outlier scores : Extended Isolation Forest (EIF)",
+                 "Outlier Scores : Extended Isolation Forest (EIF)",
                  1.0)
 
 Plot_Space_Range(OD_SCIFOREST_DevianceScores,
-                 "outlier scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
+                 "Outlier Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
                  1.0)
 
 Plot_Space_Range(OD_FCF_DevianceScores,
-                 "outlier scores : Fair-Cut Forest (FCF)",
+                 "Outlier Scores : Fair-Cut Forest (FCF)",
                  1.0)
 
 Plot_Space_Range(OD_DIF_DevianceScores,
-                 "outlier scores : Density Isolation Forest (DIF)",
+                 "Outlier Scores : Density Isolation Forest (DIF)",
                  1.0)
 
 Plot_Space_Range(OD_BIF_DevianceScores,
-                 "outlier scores : Boxed Isolation Forest (BIF)",
+                 "Outlier Scores : Boxed Isolation Forest (BIF)",
                  1.0)
 
 ##################################
@@ -1120,9 +1120,9 @@ print(OutlierDetectionPeformance_Summary, row.names=FALSE)
 (OutlierDetectionPeformance_Summary_Plot <- dotplot(OutlierDetectionAlgorithm ~ OutlierDetectionMetrics,
                           data = OutlierDetectionPeformance_Summary,
                           groups = Set,
-                          main = "anomaly detection Algorithm Performance Comparison",
+                          main = "Anomaly Detection Algorithm Performance Comparison",
                           ylab = "Algorithm",
-                          xlab = "anomaly detection Performance Metrics",
+                          xlab = "Anomaly Detection Performance Metrics",
                           auto.key = list(adj = 1),
                           type=c("p", "h"),
                           origin = 0,
