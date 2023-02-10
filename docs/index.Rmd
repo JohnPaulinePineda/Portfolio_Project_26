@@ -540,7 +540,7 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ```
 
-## 1.5 Isolation Forest-Based anomaly detection
+## 1.5 Isolation Forest-Based Anomaly Detection
 
 ###  1.5.1. Isolation Forest (IF)
 |
@@ -1038,7 +1038,7 @@ Status <- ifelse(OD_BIF_Summary$Status=="Valid",0,1)
 |
 | Algorithm performance comparison:
 |
-| **[A]** The isolation forest-based anomaly detection algorithms applied to the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors which were able to sufficiently capture the deviant points based on the higher estimated ROC curve AUC are the following :
+| **[A]** The isolation forest-based anomaly detection algorithms applied to the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors which were able to sufficiently capture the outlier points based on the higher estimated ROC curve AUC are the following :
 |      **[A.1]** FCF : Fair-Cut Forest (<mark style="background-color: #CCECFF">**isotree**</mark> package)
 |             **[A.1.1]** ROC Curve AUC = 0.78291
 |      **[A.2]** DIF: Density Isolation Forest (<mark style="background-color: #CCECFF">**isotree**</mark> package)
