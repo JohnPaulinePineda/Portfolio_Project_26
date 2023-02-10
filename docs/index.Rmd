@@ -58,7 +58,7 @@ library(stats)
 library(Hmisc)
 library(isotree)
 library(mlbench)
-
+library(MLmetrics)
 
 ##################################
 # Loading source and
@@ -542,23 +542,16 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ## 1.5 Isolation Forest-Based Outlier Detection
 
-###  1.5.1 Isolation Forest (IF)
+###  1.5.1. Isolation Forest (IF)
 |
 | **[A]** The Isolation Forest algorithm was implemented only for the principal component descriptors using the <span style="color: #FF0000">isotree</span> package.  
 |
-| **[B]** The algorithm contains 2 hyperparameters:
-|      **[B.1]** <span style="color: #FF0000">eps</span> = size (radius) of the epsilon neighborhood held constant at a value of 16 determined from an assessment of the k-nearest neighbor distance plot (where the value of the <span style="color: #FF0000">minPts</span> parameter was assigned as k).
-|      **[B.2]** <span style="color: #FF0000">minPts</span> = number of minimum points required in the eps neighborhood for core points (including the point itself) held constant at a value of 4 determined from the number of component descriptors increased by one.
+| **[B]** The algorithm contains 3 hyperparameters:
+|      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 4.
+|      **[B.2]** <span style="color: #FF0000">ntrees</span> = number of binary trees to build for the model held constant at a value of 4.
+|      **[B.3]** <span style="color: #FF0000">missing_action</span> = method of handling missing data at both fitting and prediction time held constant at a value of "FAIL".
 |
 | **[C]** The algorithm identified 4 informative clusters containing a subset of points, with the rest identified as outliers. For non-outliers, the Rand Index was determined by comparing the similarity between the cancer groupings and the cluster membership. 
-|
-| **[D]** The clustering algorithm performance is summarized as follows:
-|      **[D.1]** Outlier Detection Rate = 0.32500
-|      **[D.2]** Rand Index = 0.83190
-|
-| **[E]** The proportion of identified outliers were reasonable mostly composed of points identified under <span style="color: #FF0000">labs=BREAST</span>. 
-|
-| **[F]** The formulated clusters containing points identified under <span style="color: #FF0000">labs=COLON</span>, <span style="color: #FF0000">labs=MELANOMA</span> and <span style="color: #FF0000">labs=RENAL</span> were sufficiently informative. However, the formulated clusters containing points identified under <span style="color: #FF0000">labs=NSCLC</span> were not immediately clear.
 |
 ```{r section_1.5.1, warning=FALSE, message=FALSE}
 ##################################
@@ -608,6 +601,7 @@ OD_IF <- isolation.forest(OD,
 ##################################
 # Determining the outlier scores
 # for the deviant points
+# applied to the entire space range
 ##################################
 OD_IF_DevianceScores <- predict(OD_IF, Space_Range)
 
@@ -619,6 +613,23 @@ par(mar = c(2.5,2.2,2,2.5))
 Plot_Space_Range(OD_IF_DevianceScores,
                  "Deviance Scores : Isolated Forest",
                  1.0)
+
+##################################
+# Determining the outlier scores
+# for the deviant points
+# applied to the dataset
+##################################
+OD_IF_PredictedScores <- predict(OD_IF, OD)
+
+##################################
+# Determining the apparent 
+# discrimination performance
+# of the IF Algorithm
+##################################
+max(OD_IF_PredictedScores)
+min(OD_IF_PredictedScores)
+Status <- ifelse(DR_PCA_SUBSET$Status=="Valid",0,1)
+(OD_IF_ROCCurveAUC <- AUC(OD_IF_PredictedScores, Status))
 
 ```
 
