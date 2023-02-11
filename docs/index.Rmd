@@ -544,7 +544,7 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ###  1.5.1. Isolation Forest (IF)
 |
-| **[A]** The Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The IF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 3 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 1.
@@ -654,7 +654,7 @@ Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 
 ###  1.5.2. Extended Isolation Forest (EIF)
 |
-| **[A]** The Extended Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The EIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 3 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -728,7 +728,7 @@ Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 
 ###  1.5.3. Isolation Forest with Split Selection Criterion (SCIFOREST)
 |
-| **[A]** The Isolation Forest with Split Selection Criterion algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The SCIFOREST algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 5 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -808,7 +808,7 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 
 ###  1.5.4. Fair-Cut Forest (FCF)
 |
-| **[A]** The Fair-Cut Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The FCF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 4 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -884,7 +884,7 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 
 ###  1.5.5. Density Isolation Forest (DIF)
 |
-| **[A]** The Density Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The DIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 4 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
@@ -958,9 +958,9 @@ Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
 
 ```
 
-###  1.5.6. Boxed Isolation Forest (DIF)
+###  1.5.6. Boxed Isolation Forest (BIF)
 |
-| **[A]** The Boxed Isolation Forest algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
+| **[A]** The BIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
 | **[B]** The algorithm contains 4 hyperparameters:
 |      **[B.1]** <span style="color: #FF0000">ndims</span> = number of columns to combine to produce a split held constant at a value of 2
