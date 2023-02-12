@@ -1062,32 +1062,14 @@ OD_Summary <- rbind(OD_IF_Summary,
 ##################################
 # Replotting the heatmaps
 ##################################
-par(mfrow=c(3,2),
+par(mfrow=c(2,3),
     mar = c(2.5,2.2,2,2.5))
-
-Plot_Space_Range(OD_IF_DevianceScores,
-                 "Outlier Scores : Isolation Forest (IF)",
-                 1.0)
-
-Plot_Space_Range(OD_EIF_DevianceScores,
-                 "Outlier Scores : Extended Isolation Forest (EIF)",
-                 1.0)
-
-Plot_Space_Range(OD_SCIFOREST_DevianceScores,
-                 "Outlier Scores : Isolation Forest with Split Selection Criterion (SCIFOREST)",
-                 1.0)
-
-Plot_Space_Range(OD_FCF_DevianceScores,
-                 "Outlier Scores : Fair-Cut Forest (FCF)",
-                 1.0)
-
-Plot_Space_Range(OD_DIF_DevianceScores,
-                 "Outlier Scores : Density Isolation Forest (DIF)",
-                 1.0)
-
-Plot_Space_Range(OD_BIF_DevianceScores,
-                 "Outlier Scores : Boxed Isolation Forest (BIF)",
-                 1.0)
+Plot_Space_Range(OD_IF_DevianceScores,"IF",1.0)
+Plot_Space_Range(OD_EIF_DevianceScores,"EIF",1.0)
+Plot_Space_Range(OD_SCIFOREST_DevianceScores,"SCIFOREST",1.0)
+Plot_Space_Range(OD_FCF_DevianceScores,"FCF",1.0)
+Plot_Space_Range(OD_DIF_DevianceScores,"DIF",1.0)
+Plot_Space_Range(OD_BIF_DevianceScores,"BIF",1.0)
 
 ##################################
 # Consolidating all evaluation results
