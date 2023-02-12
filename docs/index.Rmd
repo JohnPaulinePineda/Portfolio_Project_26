@@ -84,6 +84,9 @@ Satellite$Status <- ifelse(Satellite_Outlier_Label==TRUE,
                             "Outlier",
                             "Valid")
 Satellite$Status <- as.factor(Satellite$Status)
+Satellite$Status <- factor(Satellite$Status,
+                           levels = c("Valid",
+                                      "Outlier"))
 
 ##################################
 # Performing a general exploration of the data set
