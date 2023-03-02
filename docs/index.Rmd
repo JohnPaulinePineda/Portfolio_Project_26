@@ -549,7 +549,7 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ###  1.5.1. Isolation Forest (IF)
 |
-| [IF](https://ieeexplore.ieee.org/document/4781136/) builds a collection of isolation trees from random subsets of data using axis-parallel splits and aggregates a standardized anomaly score using isolation depth averaged over a forest of such trees to come up with a final outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
+| [IF](https://ieeexplore.ieee.org/document/4781136/) builds a collection of isolation trees from random subsets of data using axis-parallel splits and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
 |
 | **[A]** The IF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -661,7 +661,7 @@ Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 
 ###  1.5.2. Extended Isolation Forest (EIF)
 |
-| [EIF](https://arxiv.org/abs/1811.02141) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates a standardized anomaly score using isolation depth averaged over a forest of such trees to come up with a final outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
+| [EIF](https://arxiv.org/abs/1811.02141) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
 |
 | **[A]** The EIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -737,7 +737,7 @@ Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 
 ###  1.5.3. Isolation Forest with Split Selection Criterion (SCIFOREST)
 |
-| [SCIFOREST](https://link.springer.com/chapter/10.1007/978-3-642-15883-4_18) builds a collection of isolation trees from random subsets of data using hyperplane splits that maximize an averaged standard deviation gain criterion and aggregates a standardized anomaly score using isolation depth averaged over a forest of such trees to come up with a final outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
+| [SCIFOREST](https://link.springer.com/chapter/10.1007/978-3-642-15883-4_18) builds a collection of isolation trees from random subsets of data using hyperplane splits that maximize an averaged standard deviation gain criterion and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
 |
 | **[A]** The SCIFOREST algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -819,7 +819,7 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 
 ###  1.5.4. Fair-Cut Forest (FCF)
 |
-| [FCF](https://arxiv.org/abs/2110.13402) builds a collection of isolation trees from random subsets of data using hyperplane splits that minimize the pooled sums of variances of all columns and aggregates a standardized anomaly score using isolation depth averaged over a forest of such trees to come up with a final outlier score for each observation. Isolation depth is the number of splits required to isolate the sample. 
+| [FCF](https://arxiv.org/abs/2110.13402) builds a collection of isolation trees from random subsets of data using hyperplane splits that minimize the pooled sums of variances of all columns and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample. 
 |
 | **[A]** The FCF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -897,7 +897,7 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 
 ###  1.5.5. Density Isolation Forest (DIF)
 |
-| [DIF](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates a standardized anomaly score using density averaged over a forest of such trees to come up with a final outlier score for each observation. Density is measured as the ratio between the fraction of points in the subsample that end up in a node and the fraction of the volume in the feature space which defines the node according to the splits that lead to it. 
+| [DIF](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using density averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Density is measured as the ratio between the fraction of points in the subsample that end up in a node and the fraction of the volume in the feature space which defines the node according to the splits that lead to it. 
 |
 | **[A]** The DIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -975,7 +975,7 @@ Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
 
 ###  1.5.6. Boxed Isolation Forest (BIF)
 |
-| [BIF](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates a standardized anomaly score using boxed ratio averaged over a forest of such trees to come up with a final outlier score for each observation. Density is measured as the ratio between the volume of the boxed feature space for the node as defined by the smallest and largest values from the split conditions for each column (bounded by the variable ranges in the sample) and the variable ranges in
+| [BIF](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using boxed ratio averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Density is measured as the ratio between the volume of the boxed feature space for the node as defined by the smallest and largest values from the split conditions for each column (bounded by the variable ranges in the sample) and the variable ranges in
 the tree sample. 
 |
 | **[A]** The BIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
