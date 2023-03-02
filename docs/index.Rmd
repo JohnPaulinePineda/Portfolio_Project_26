@@ -1178,7 +1178,7 @@ print(OutlierDetectionPeformance_Summary, row.names=FALSE)
 | **[Article]** [Metrics, Techniques and Tools of Anomaly Detection: A Survey](https://www.cse.wustl.edu/~jain/cse567-17/ftp/mttad/index.html) by Xuanfan Wu
 | **[Publication]** [Isolation Forest](https://ieeexplore.ieee.org/document/4781136/) by Fei Tony Liu, Kai Ming Ting and Zhi-Hua Zhou (2008 Eighth IEEE International Conference on Data Mining)
 | **[Publication]** [Isolation-Based Anomaly Detection](https://dl.acm.org/doi/10.1145/2133360.2133363) by Fei Tony Liu, Kai Ming Ting and Zhi-Hua Zhou (ACM Transactions on Knowledge Discovery from Data)
-| **[Publication]** [On Detecting Clustered Anomalies using SCiForest](https://link.springer.com/chapter/10.1007/978-3-642-15883-4_18) by Fei Tony Liu, Kai Ming Ting
+| **[Publication]** [On Detecting Clustered Anomalies using SCiForest](https://link.springer.com/chapter/10.1007/978-3-642-15883-4_18) by Fei Tony Liu and Kai Ming Ting (Joint European Conference on Machine Learning and Knowledge Discovery in Databases)
 | **[Publication]** [Extended Isolation Forest](https://arxiv.org/abs/1811.02141) by Sahand Hariri, Matias Carrasco Kind and Robert Brunner (ARXIV)
 | **[Publication]** [Revisiting Randomized Choices in Isolation Forests](https://arxiv.org/abs/2110.13402) by David Cortes (ARXIV)
 | **[Publication]** [Isolation Forests: Looking Beyond Tree Depth](https://arxiv.org/abs/2111.11639) by David Cortes (ARXIV)
