@@ -34,7 +34,10 @@ knitr::opts_chunk$set(echo = TRUE, fig.width=15, fig.height=10)
 |             **[B.1.2]** Category 2 = <span style="color: #FF0000">Status=Valid</span> 
 |      **[B.2]** 36/37 descriptors = 36/36 (numeric)
 |     
-|  
+| 
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.1, warning=FALSE, message=FALSE}
 ##################################
 # Loading R libraries
@@ -109,6 +112,9 @@ PDA <- Satellite
   row.names=NULL)
 )
 ```
+
+</details>
+
 ##  1.2 Data Quality Assessment
 |
 | Data quality assessment:
@@ -121,6 +127,10 @@ PDA <- Satellite
 |
 | **[D]** No high skewness observed for any variable with Skewness>3 or Skewness<(-3).
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.2, warning=FALSE, message=FALSE}
 ##################################
 # Loading dataset
@@ -339,6 +349,8 @@ if (length(names(DQA.Descriptors.Numeric))==0) {
 
 ```
 
+</details>
+
 ##  1.3 Data Preprocessing
 
 ###  1.3.1 Centering and Scaling
@@ -347,6 +359,10 @@ if (length(names(DQA.Descriptors.Numeric))==0) {
 |
 | **[A]** To maintain an objective comparison across the different descriptors, centering and scaling transformation was applied on the numeric variables. The <span style="color: #0000FF">center</span> method from the <mark style="background-color: #CCECFF">**caret**</mark> package was implemented which subtracts the average value of a numeric variable to all the values. As a result of centering, the variables had zero mean values. In addition, the <span style="color: #0000FF">scale</span> method, also from the <mark style="background-color: #CCECFF">**caret**</mark> package, was applied which performs a center transformation with each value of the variable divided by its standard deviation. Scaling the data coerced the values to have a common standard deviation of one.
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.3.1, warning=FALSE, message=FALSE}
 ##################################
 # Loading dataset
@@ -373,12 +389,18 @@ row.names(DPA.Descriptors.Numeric_CenteredScaledTransformed) <- NULL
 
 ```
 
+</details>
+
 ###  1.3.2 Dimensionality Reduction
 |
 | Data transformation assessment:
 |
 | **[A]** Considering the high dimensional nature of the dataset, Principal Component Analysis (PCA) was applied to summarize the information content from the 36 descriptors by means of a smaller set of summary indices composed of the first two principal components, enabling a more efficient visualization and analysis.
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.3.2, warning=FALSE, message=FALSE}
 ##################################
 # Loading dataset
@@ -421,6 +443,8 @@ DR_PCA$x <- as.data.frame(DR_PCA$x)
 
 ```
 
+</details>
+
 ###  1.3.3 Pre-Processed Dataset
 |
 | Preliminary dataset assessment:
@@ -439,6 +463,10 @@ DR_PCA$x <- as.data.frame(DR_PCA$x)
 |      **[C.1]** Centering and scaling applied to improve data quality
 |      **[C.2]** PCA transformation to reduce the number of features into a workable subset
 | 
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.3.3, warning=FALSE, message=FALSE}
 ##################################
 # Gathering deascriptive statistics
@@ -446,6 +474,8 @@ DR_PCA$x <- as.data.frame(DR_PCA$x)
 (DR_PCA_SUBSET_Skimmed <- skim(as.data.frame(DR_PCA_SUBSET)))
 
 ```
+
+</details>
 
 ## 1.4 Data Exploration
 |
@@ -461,6 +491,10 @@ DR_PCA$x <- as.data.frame(DR_PCA$x)
 |
 | **[C]** To better visualize outlier scores through a heatmap, the subsequent analysis will be conducted using the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> variables.
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.4, warning=FALSE, message=FALSE}
 ##################################
 # Loading dataset
@@ -545,6 +579,8 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 
 ```
 
+</details>
+
 ## 1.5 Isolation Forest-Based Anomaly Detection
 
 ###  1.5.1. Isolation Forest (IF)
@@ -561,6 +597,10 @@ splom(~EDA[,sapply(EDA, is.numeric)],
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their differentially expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.76056
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.5.1, warning=FALSE, message=FALSE}
 ##################################
 # Loading dataset
@@ -659,6 +699,8 @@ Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 
 ```
 
+</details>
+
 ###  1.5.2. Extended Isolation Forest (EIF)
 |
 | [Extended Isolation Forest](https://arxiv.org/abs/1811.02141) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
@@ -673,6 +715,10 @@ Status <- ifelse(OD_IF_Summary$Status=="Valid",0,1)
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their differentially expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.74786
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.5.2, warning=FALSE, message=FALSE}
 ##################################
 # Implementing the EIF Algorithm
@@ -735,6 +781,8 @@ Status <- ifelse(OD_EIF_Summary$Status=="Valid",0,1)
 
 ```
 
+</details>
+
 ###  1.5.3. Isolation Forest with Split Selection Criterion (SCIFOREST)
 |
 | [Isolation Forest with Split Selection Criterion](https://link.springer.com/chapter/10.1007/978-3-642-15883-4_18) builds a collection of isolation trees from random subsets of data using hyperplane splits that maximize an averaged standard deviation gain criterion and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample.
@@ -753,6 +801,10 @@ criterion on the same variable held constant at a value of 1.
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was not able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.56143
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.5.3, warning=FALSE, message=FALSE}
 ##################################
 # Implementing the SCIFOREST Algorithm
@@ -817,6 +869,8 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 
 ```
 
+</details>
+
 ###  1.5.4. Fair-Cut Forest (FCF)
 |
 | [Fair-Cut Forest](https://arxiv.org/abs/2110.13402) builds a collection of isolation trees from random subsets of data using hyperplane splits that minimize the pooled sums of variances of all columns and aggregates the anomaly decision function measurements using isolation depth averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Isolation depth is the number of splits required to isolate the sample. 
@@ -832,6 +886,10 @@ Status <- ifelse(OD_SCIFOREST_Summary$Status=="Valid",0,1)
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.78291
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.5.4, warning=FALSE, message=FALSE}
 ##################################
 # Implementing the FCF Algorithm
@@ -895,6 +953,8 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 
 ```
 
+</details>
+
 ###  1.5.5. Density Isolation Forest (DIF)
 |
 | [Density Isolation Forest](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using density averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Density is measured as the ratio between the fraction of points in the subsample that end up in a node and the fraction of the volume in the feature space which defines the node according to the splits that lead to it. 
@@ -910,6 +970,10 @@ Status <- ifelse(OD_FCF_Summary$Status=="Valid",0,1)
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.77588
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.5.5, warning=FALSE, message=FALSE}
 ##################################
 # Implementing the DIF Algorithm
@@ -973,10 +1037,11 @@ Status <- ifelse(OD_DIF_Summary$Status=="Valid",0,1)
 
 ```
 
+</details>
+
 ###  1.5.6. Boxed Isolation Forest (BIF)
 |
-| [Boxed Isolation Forest](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using boxed ratio averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Density is measured as the ratio between the volume of the boxed feature space for the node as defined by the smallest and largest values from the split conditions for each column (bounded by the variable ranges in the sample) and the variable ranges in
-the tree sample. 
+| [Boxed Isolation Forest](https://arxiv.org/abs/2111.11639) builds a collection of isolation trees from random subsets of data using hyperplane splits and aggregates the anomaly decision function measurements using boxed ratio averaged over a forest of such trees to come up with a final standardized outlier score for each observation. Density is measured as the ratio between the volume of the boxed feature space for the node as defined by the smallest and largest values from the split conditions for each column (bounded by the variable ranges in the sample) and the variable ranges in the tree sample. 
 |
 | **[A]** The BIF algorithm was implemented only for the <span style="color: #FF0000">PC1</span> and <span style="color: #FF0000">PC2</span> principal component descriptors using the <mark style="background-color: #CCECFF">**isotree**</mark> package.  
 |
@@ -989,6 +1054,10 @@ the tree sample.
 | **[C]** Using the label information from the <span style="color: #FF0000">Status</span> variable defined prior to the analysis, the algorithm was able to sufficiently discriminate between <span style="color: #FF0000">Status=Outlier</span> and <span style="color: #FF0000">Status=Valid</span>, as demonstrated by their comparably expressed deviance score densities.
 |      **[C.1]** ROC Curve AUC = 0.57868
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.5.6, warning=FALSE, message=FALSE}
 ##################################
 # Implementing the BIF Algorithm
@@ -1052,6 +1121,8 @@ Status <- ifelse(OD_BIF_Summary$Status=="Valid",0,1)
 
 ```
 
+</details>
+
 ##  1.6 Algorithm Comparison Summary
 |
 | Algorithm performance comparison:
@@ -1062,6 +1133,10 @@ Status <- ifelse(OD_BIF_Summary$Status=="Valid",0,1)
 |      **[A.2]** **DIF: Density Isolation Forest** (<mark style="background-color: #CCECFF">**isotree**</mark> package)
 |             **[A.2.1]** ROC Curve AUC = 0.77588
 |
+|
+
+<details><summary><mark style="background-color: #000000;color: #FFFFFF">**Code Chunk | Output**</mark></summary>
+
 ```{r section_1.6, warning=FALSE, message=FALSE}
 
 ##################################
@@ -1135,6 +1210,8 @@ print(OutlierDetectionPeformance_Summary, row.names=FALSE)
                           cex = 2))
 
 ```
+
+</details>
 
 # **2. References**
 |
